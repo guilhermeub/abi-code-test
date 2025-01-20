@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Domain.Entities;
 using AutoMapper;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
@@ -12,7 +14,10 @@ public class UpdateSaleProfile : Profile
     /// </summary>
     public UpdateSaleProfile()
     {
-        CreateMap<Guid, Application.Sales.UpdateSale.UpdateSaleCommand>()
-            .ConstructUsing(id => new Application.Sales.UpdateSale.UpdateSaleCommand(id));
+        CreateMap<Guid, UpdateSaleCommand>()
+            .ConstructUsing(id => new UpdateSaleCommand(id));
+
+        CreateMap<UpdateSaleCommand, Sale>()
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
     }
 }

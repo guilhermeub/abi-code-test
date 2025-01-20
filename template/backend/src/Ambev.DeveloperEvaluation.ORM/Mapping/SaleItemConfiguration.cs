@@ -31,7 +31,7 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
                .HasColumnType("decimal(18,4)")
                .HasDefaultValue(0m);
 
-        builder.Property(si => si.Price)
+        builder.Property(si => si.AmountItemPrice)
                .IsRequired()
                .HasColumnType("decimal(18,2)");
 
