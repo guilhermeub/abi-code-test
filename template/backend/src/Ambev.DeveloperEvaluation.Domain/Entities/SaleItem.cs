@@ -14,15 +14,16 @@ public class SaleItem : BaseEntity, ISaleItem
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal Discount { get; set; }
-    public decimal TotalAmount { get; set; }
+    public decimal Price { get; set; }
     public bool IsCancelled { get; set; } = false;
 
     public Guid SaleId { get; set; }
     public virtual Sale Sale { get; set; }
 
     // Constructor
-    public SaleItem(string product, int quantity, decimal unitPrice)
+    public SaleItem(Guid saleId, string product, int quantity, decimal unitPrice)
     {
+        SaleId = saleId;
         Product = product;
         Quantity = quantity;
         UnitPrice = unitPrice;
@@ -32,7 +33,7 @@ public class SaleItem : BaseEntity, ISaleItem
     // Method to calculate total amount for the item
     public void CalculateTotalAmount()
     {
-        TotalAmount = Quantity * UnitPrice;
+        Price = Quantity * UnitPrice;
     }
 
     // Method to apply discount on the item
@@ -40,23 +41,23 @@ public class SaleItem : BaseEntity, ISaleItem
     {
         if (Quantity >= 4 && Quantity < 10)
         {
-            Discount = TotalAmount * 0.1m; // 10% discount
+            Discount = Price * 0.1m; // 10% discount
         }
         else if (Quantity >= 10 && Quantity <= 20)
         {
-            Discount = TotalAmount * 0.2m; // 20% discount
+            Discount = Price * 0.2m; // 20% discount
         }
         else
         {
             Discount = 0m; // No discount
         }
-        TotalAmount -= Discount;
+        Price -= Discount;
     }
 
     // Method to cancel the item
     public void CancelItem()
     {
         IsCancelled = true;
-        TotalAmount = 0m;
+        Price = 0m;
     }
 }

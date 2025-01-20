@@ -58,11 +58,11 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
                 item.Discount = 0.00m;
             }
 
-            item.TotalAmount = item.Quantity * item.UnitPrice * (1 - item.Discount);
+            item.Price = item.Quantity * item.UnitPrice * (1 - item.Discount);
         }
 
         var sale = _mapper.Map<Sale>(command);
-        sale.TotalSaleAmount = command.Items.Sum(i => i.TotalAmount);
+        sale.TotalSaleAmount = command.Items.Sum(i => i.Price);
 
         var createdSale = await _saleRepository.CreateSaleAsync(sale, cancellationToken);
         var result = _mapper.Map<CreateSaleResult>(createdSale);

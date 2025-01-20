@@ -55,11 +55,11 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale
                     item.Discount = 0.00m;
                 }
 
-                item.TotalAmount = item.Quantity * item.UnitPrice * (1 - item.Discount);
+                item.Price = item.Quantity * item.UnitPrice * (1 - item.Discount);
             }
 
             sale.Items = request.Items;
-            sale.TotalSaleAmount = request.Items.Sum(i => i.TotalAmount);
+            sale.TotalSaleAmount = request.Items.Sum(i => i.Price);
 
             await _saleRepository.UpdateSaleAsync(sale);
 
